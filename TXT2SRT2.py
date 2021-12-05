@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 import xml.etree.ElementTree as ET
 
-inpfile = 'Sequence6.xml'
-outfile = 'Sequence.srt'
+inpfile = 'Sequence.xml' #Here your xml file
+outfile = 'Sequence.srt' #here your srt file
 
 def textretriever():
 
