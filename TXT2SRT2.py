@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 import xml.etree.ElementTree as ET
 
-inpfile = 'Sequence.xml' #Here your xml file
-outfile = 'Sequence.srt' #here your srt file
+inpfile = 'Sequence10.xml'
+outfile = 'Sequence.srt'
 
 def textretriever():
 
@@ -31,13 +31,18 @@ def textretriever():
         inp= timecoder(int(cliplist.find('start').text), int(timebase))
         outp = timecoder(int(cliplist.find('end').text), int(timebase))
 
+        order=int(cliplist.find('start').text) #usar para ordenar lista
+
         for textlist in cliplist.findall('./filter/effect'):
             if (textlist.find('effectid').text) == 'GraphicAndType':
                 txt = textlist.find('name').text
 
-        subtitle.insert (nu, [inp,outp,txt])
+        subtitle.insert (nu, [inp,outp,txt,order])
         #print (subtitle[nu])
         nu=nu+1
+
+    #ordenar lista subtitle por el factor "order"
+    subtitle.sort(key=lambda subtitle: subtitle[3])
 
     srtcreator(subtitle)
 
@@ -65,10 +70,10 @@ def srtcreator(subtitle):
         lbrk = '*' #Caracter que marca el salto de linea
 
         brks = ([pos for pos, char in enumerate(text) if char == lbrk]) #lista con ubicacion de saltos en el str, posicion
-        print ('quiebre en posicion ', brks)
+        #print ('quiebre en posicion ', brks)
         text = text.replace('*', ' ')  # cambio de special characters
         text = text.encode("utf-8")
-        print ('texto: ', text)
+        #print ('texto: ', text)
 
         cantBrks = len(brks)
         #print ('cant de quiebres', cantBrks)
